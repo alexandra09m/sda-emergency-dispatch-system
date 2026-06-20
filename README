@@ -1,0 +1,84 @@
+// Dulhan Maria Alexandra 313CA
+
+#main.c
+
+	Initializeaza sistemul.
+	Citeste comenzile pe rand si le trimite mai departe in functii care se
+	ocupa cu procesarea comenzilor.
+	Elibereaza memoria sistemului la finalul programului.
+
+#comenzi.h
+#comenzi.c
+
+	Aici se afla toate functiile care proceseaza comenzile. Fiecare functie
+	se ocupa de un grup de comenzi. Am facut acest fisier pentru a elibera
+	main ul si a fi mai organizat in functie de ce comanda e necesara.
+
+	Fiecare functie:
+	-verifica daca recunoaste comanda
+	-modifica starea sistemului
+	-afiseaza mesajele cerute
+
+	-proc_comanda_incidente -> proceseaza ADD_INCIDENT, SHOW_INCIDENT,
+	SOLVED_INCIDENT
+	-proc_comanda_units -> proceseaza SHOW_UNIT, CHECK_UNITS_AVAILABILITY
+	-proc_comanda_interv -> proceseaza SHOW_INTERVENTIONS
+	-proc_comanda_dispatch -> proceseaza DISPATCH, UNDO_LAST_DISPATCH
+
+#sistem.h
+#sistem.c
+
+	Structuri:
+	-node -> date despre nod si pointer catre urmatorul
+	-queue -> pointer catre inceputul si finalul cozii si marimea lui
+	-stack -> pointer catre capul stack ului si marimea lui
+	-unit -> id, tip si disponibilitatea echipajului
+	-incident -> id, nivelul de prioritate, descrierea si statusul incidentului
+				 pointeri catre incidentul de dupa si de dinainte
+	-interventie -> pointer catre incidente, echipaje si catre interventia de
+					dupa si de dinainte
+	-sistem -> pointer catre echipaje, incidente, interventii
+			   retine nr de echipaje
+			   pointer catre cozi cu grad de prioritizare mic, mediu si mare
+			   pointer catre coada cu echipaje disponibile
+			   pointer catre stiva cu istoricul de dispatch
+
+	Aici se afla functiile necesare pentru gestionarea sistemului.
+
+	Exista cate o functie pentru :
+	-initializarea sistemului
+	-eliberarea sistemului
+
+#implementari_date.h
+#implementari_date.c
+
+	Aici se afla implementarile structurilor de date folosite in program si
+	functii ajutatoare.
+
+	-coada -> folosita pentru cele 3 cozi de prioritate si pentru coada de
+			  disponibilitate a echipajelor
+			  salveaza pointeri, nu copii ale structurilor
+
+	-stiva -> folosita pentru istoricul dispatch urilor
+			  la fiecare DISPATCH reusit se salveaza un pointer catre
+			  interventie in stiva, pentru a putea fi eventual anulat cu
+			  UNDO_LAST_DISPATCH
+
+	Exista cate o functie pentru :
+	-crearea, inserarea si eliberarea memoriei pentru fiecare structura de
+	date
+	-a gasi si returna un echipaj dupa id, un incident, o interventie
+	-a returna marimea unei cozi sau unei liste cu interventii
+	-a scoate un element din stiva / coada
+
+#utilitare.h
+#utilitare.c
+
+	Aici se afla utilitare folositoare in program.
+
+	Exista cate o functie pentru :
+	-citirea unei linii de orice lungime
+	-extragerea unui sir de caractere dintre ghilimele(din comanda
+	ADD_INCIDENT)
+
+	De asemenea, am definit macro ul DIE.
